@@ -19,7 +19,7 @@ DEM_path <- './Raster_Path.tif'
 Save_Path <- "./Save_Folder_Path.jpg"  # must be a jpg for this workflow.
 
 # Enter the output path for your scene...
-fname = './Out_Folder_Path.png'  # save sat output (must be included at the moment.)
+fname <- './Out_Folder_Path.png'  # save sat output (must be included at the moment.) could be atemp file though...
 
 # ------ Get and project Raster ---------------
 
@@ -32,10 +32,10 @@ dem_ras <- projectRaster(dem_ras, crs = newproj)
 
 # ------ Get Aerial image and extent. Then crop Raster ---------------
 
-X = Loc_Coords[1]
-Y = Loc_Coords[2]
+X <- Loc_Coords[1]
+Y <- Loc_Coords[2]
 
-amap = get_googlemap(center = c(lon = X , lat = Y),
+amap <- get_googlemap(center = c(lon = X , lat = Y),
                      zoom = 14, scale = 2,
                      maptype ='satellite',
                      color = 'color', size =c(640, 640)) 
@@ -45,7 +45,7 @@ bb <- attr(amap, "bb")
 bbox <- as.numeric(unlist(bb2bbox(bb)))
 bbox <- c(bbox[1], bbox[3], bbox[2], bbox[4])
 
-basemap = ggmap(amap, extent = "device")
+basemap <- ggmap(amap, extent = "device")
 ggmap(amap)
 
 dem_ras <- raster::crop(dem_ras, extent(bbox), snap = 'in')
@@ -58,12 +58,12 @@ grDevices::png(filename = fname, width = 1280, height = 1280)
 par(mar = c(0,0,0,0))
 basemap
 dev.off()
-overlay_img = png::readPNG(fname)
+overlay_img <- png::readPNG(fname)
 
 
 # dim(dem_mat)
 dim(overlay_img)
-#aggregate raster to incrEASE RESOLUTION
+#disaggregate raster to incrEASE RESOLUTION
 dem_ras2 <- raster::disaggregate(dem_ras, fact = 7, method='bilinear')
 #Convert raster to matrix
 dem_mat2 <- raster_to_matrix(dem_ras2)
