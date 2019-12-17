@@ -60,14 +60,23 @@ basemap
 dev.off()
 overlay_img <- png::readPNG(fname)
 
+# ------------- Check resolutions of overlay and DEM ------
 
-# dim(dem_mat)
-dim(overlay_img)
-#disaggregate raster to incrEASE RESOLUTION
-dem_ras2 <- raster::disaggregate(dem_ras, fact = 7, method='bilinear')
-#Convert raster to matrix
-dem_mat2 <- raster_to_matrix(dem_ras2)
-# dim(dem_mat2)
+# get approx. dimensions 
+ras_res = ceiling((dim(dem_ras)[1]+dim(dem_ras)[2])/2)
+over_res = ceiling((dim(overlay_img)[1]+dim(overlay_img)[2])/2)
+
+if (over_res > ras_res){
+  disag_fac = ceiling(over_res/ras_res)
+  #disaggregate raster to incrEASE RESOLUTION
+  dem_ras2 <- raster::disaggregate(dem_ras, fact = disag_fac, method='bilinear')
+  #Convert raster to matrix
+  dem_mat2 <- raster_to_matrix(dem_ras2)
+  
+} else{
+  print("Raster resolution > satelite imagery - leave as is...")
+  dem_mat2 <- raster_to_matrix(dem_ras)
+}
 
 # ----------- Run Rayshader ---------------------
 
