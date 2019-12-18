@@ -10,3 +10,5 @@ https://github.com/dkahle/ggmap
 
 Here's an example of what you can make with this workflow...
 ![Barre de Chine Example](./example/Barre_de_Chine.jpg)
+
+![Matterhorn](./example/Matterhorn_V1.jpg)
