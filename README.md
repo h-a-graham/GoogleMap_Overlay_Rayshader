@@ -1,3 +1,5 @@
+## This workflow is perhaps still helpful but the [rayvista](https://github.com/h-a-graham/rayvista) is probably more useful... 
+
 # GoogleMap_Overlay_Rayshader
 A quick method for overlaying a Google Map satellite image on a  3D DEM using rayshader and ggmap packages.
 
